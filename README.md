@@ -35,7 +35,7 @@ const pool = mysql.createPool({
 ## 3. 서버 실행 방법
 아래 명령어로 서버를 실행합니다.
 ```
-npm start
+node app.js
 ```
 서버는 기본적으로 http://localhost:3000 에서 실행됩니다.
 
