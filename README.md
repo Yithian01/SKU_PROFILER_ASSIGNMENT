@@ -19,6 +19,8 @@ npm install
 
 `db.js` 파일에서 MySQL 사용자 이름과 비밀번호를 본인 환경에 맞게 수정해주세요.
 
+ local mysql에 `profiler_db` 라는 데이터베이스가 생성되어 있어야 합니다. 
+
 ```js
 const pool = mysql.createPool({
   host: 'localhost',
