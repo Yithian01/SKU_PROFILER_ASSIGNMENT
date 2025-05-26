@@ -1,0 +1,31 @@
+body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+      color: #333;
+      background: #f9f9f9;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .chart-container {
+      width: 800px;
+      margin: 0 auto 50px auto; /* 좌우 중앙정렬 + 아래 여백 */
+      background: white;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #2980b9;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Batch <%= batch.id %> Details</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/css/ChartPage.css" />
+  
+</head>
+<body>
+  <h1>Batch <%= batch.id %> Details</h1>
+  <p>Description: <%= batch.description %></p>
+  <p>Created At: <%= batch.created_at.toLocaleString() %></p>
+
+  <!-- core별 그래프 -->
+  <h2>Core별 Throughput 통계</h2>
+  <div class="chart-container">
+    <canvas id="coreChart" width="800" height="400"></canvas>
+  </div>
+  <!-- task별 그래프 -->
+  <h2>Task별 Throughput 통계</h2>
+  <div class="chart-container">
+    <canvas id="taskChart" width="800" height="400"></canvas>
+  </div>
+  <a href="/">Back to List</a>
+
+  <script>
+    // 서버에서 받은 metrics 배열을 자바스크립트 변수에 할당
+    const metrics = <%- JSON.stringify(metrics) %>;
+
+    // helper 함수: 주어진 배열에서 min, max, avg 계산
+    function calcStats(arr) {
+      const values = arr.map(x => x.throughput);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const avg = values.reduce((a,b) => a + b, 0) / values.length;
+      return { min, max, avg };
+    }
+
+    // core_id별로 그룹핑 후 통계 계산
+    const coreGroups = {};
+    metrics.forEach(m => {
+      if (!coreGroups[m.core_id]) coreGroups[m.core_id] = [];
+      coreGroups[m.core_id].push(m);
+    });
+
+    const coreLabels = Object.keys(coreGroups);
+    const coreMins = [], coreMaxs = [], coreAvgs = [];
+
+    coreLabels.forEach(core => {
+      const stats = calcStats(coreGroups[core]);
+      coreMins.push(stats.min);
+      coreMaxs.push(stats.max);
+      coreAvgs.push(stats.avg);
+    });
+
+    // task_id별로 그룹핑 후 통계 계산
+    const taskGroups = {};
+    metrics.forEach(m => {
+      if (!taskGroups[m.task_id]) taskGroups[m.task_id] = [];
+      taskGroups[m.task_id].push(m);
+    });
+
+    const taskLabels = Object.keys(taskGroups);
+    const taskMins = [], taskMaxs = [], taskAvgs = [];
+
+    taskLabels.forEach(task => {
+      const stats = calcStats(taskGroups[task]);
+      taskMins.push(stats.min);
+      taskMaxs.push(stats.max);
+      taskAvgs.push(stats.avg);
+    });
+
+    // core별 그래프 생성
+    const ctxCore = document.getElementById('coreChart').getContext('2d');
+    new Chart(ctxCore, {
+      type: 'bar',
+      data: {
+        labels: coreLabels,
+        datasets: [
+          { label: 'MIN', data: coreMins, backgroundColor: 'rgba(54, 162, 235, 0.5)' },
+          { label: 'MAX', data: coreMaxs, backgroundColor: 'rgba(255, 99, 132, 0.5)' },
+          { label: 'AVG', data: coreAvgs, backgroundColor: 'rgba(255, 206, 86, 0.5)' }
+        ]
+      },
+      options: {
+        responsive: false,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    // task별 그래프 생성
+    const ctxTask = document.getElementById('taskChart').getContext('2d');
+    new Chart(ctxTask, {
+      type: 'bar',
+      data: {
+        labels: taskLabels,
+        datasets: [
+          { label: 'MIN', data: taskMins, backgroundColor: 'rgba(54, 162, 235, 0.5)' },
+          { label: 'MAX', data: taskMaxs, backgroundColor: 'rgba(255, 99, 132, 0.5)' },
+          { label: 'AVG', data: taskAvgs, backgroundColor: 'rgba(255, 206, 86, 0.5)' }
+        ]
+      },
+      options: {
+        responsive: false,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+  </script>
+</body>
+</html>

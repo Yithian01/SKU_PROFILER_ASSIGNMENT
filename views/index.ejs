@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profiler Batch List</title>
+  <link rel="stylesheet" href="/css/mainPage.css" />
+</head>
+<body>
+  <h1>Profiler Batch List</h1>
+
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="inputFile" required />
+    <button type="submit">Upload</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Description (Filename)</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% batches.forEach(batch => { %>
+        <tr>
+          <td><%= batch.id %></td>
+          <td><%= batch.description %></td>
+          <td><%= batch.created_at.toLocaleString() %></td>
+          <td>
+            <a href="/batch/<%= batch.id %>">View Details</a>
+            <form action="/delete/<%= batch.id %>" method="post" style="display:inline;">
+              <button type="submit" onclick="return confirm('삭제하시겠습니까?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>

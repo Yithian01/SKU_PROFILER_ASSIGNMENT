@@ -1,0 +1,100 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+  margin: 30px auto;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+form {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+input[type="file"] {
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button {
+  background-color: #2980b9;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #3498db;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #2980b9;
+  color: white;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+tbody tr:hover {
+  background-color: #f1f7ff;
+}
+
+a {
+  color: #2980b9;
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: 10px;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+form[action^="/delete"] button {
+  background-color: #e74c3c;
+  margin-left: 0;
+}
+form[action^="/delete"] button:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 0 10px;
+  }
+  th, td {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  button {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+}
